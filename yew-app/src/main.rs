@@ -1,16 +1,18 @@
 use yew::prelude::*;
 use components::header::Header;
+use components::todo::todo_list::TodoList;
 
 mod components;
 #[function_component(App)]
 fn app() -> Html {
     html! {
-        <div>
+
+        <>
             <Header />
-            <h1>{ "Hello World" }</h1>
-        </div>
-
-
+            <main class="container-fluid mt-2">
+                <TodoList />
+            </main>
+        </>
     }
 }
 

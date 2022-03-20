@@ -1,14 +1,21 @@
-use yew::{Callback, InputEvent, MouseEvent, function_component, html, Html, use_state};
+use yew::{Callback, InputEvent, MouseEvent,Properties, function_component, html, Html, use_state};
+
+#[derive(Properties, PartialEq)]
+pub struct TodoFormProps {
+  pub on_add: Callback<String>
+}
 
 #[function_component(TodoForm)]
-pub fn todo_item() -> Html {
+pub fn todo_item(props: &TodoFormProps) -> Html {
   let title = use_state(|| "".to_string());
 
   let onclick = {
+    let on_add = props.on_add.clone();
     let title = title.clone();
     Callback::from(move |e: MouseEvent| {
-      e.prevent_default();
-      log::info!("title: {:?}", *title);
+      e.prevent_default(); // Web API の Event.preventDefault() と同じ
+      title.set("".to_string()); // 追加ボタンを押したら入力を空に
+      on_add.emit((*title).clone()); // 親にイベント伝える
     })
   };
 

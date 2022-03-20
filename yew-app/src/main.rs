@@ -7,12 +7,18 @@ mod components;
 #[function_component(App)]
 fn app() -> Html {
 
+    let on_add = {
+        Callback::from(move |title: String| {
+            log::info!("on_add: {:?}", title);
+        })
+    };
+
     html! {
 
         <>
             <Header />
             <main class="container-fluid mt-2">
-                <TodoForm />
+                <TodoForm {on_add} />
                 <TodoList />
             </main>
         </>
